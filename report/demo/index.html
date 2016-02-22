@@ -2,145 +2,55 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<style type="text/css">
-
-body {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-​</style>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script type="text/javascript">
-    var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+<button class="button-secondary pure-button">Назад</button>
+<div class="pure-g">
+    <div class="pure-u-7-24">
+        <h2>Начальные данные</h2>
+        <table class="pure-table pure-table-bordered">
+        <tr>
+            <td>x<sub>1</sub> = 0.005</td><td>y<sub>1</sub> = 25</td>
+        </tr>
+        <tr>
+            <td>x<sub>2</sub> = -0.005</td><td>y<sub>2</sub> = 14.8</td>
+        </tr>
+        </table>
+    </div>
+    <div class="pure-u-17-24">
+        <h2>Фазовые координаты вблизи точки либрации</h2>
+        <table class="pure-table pure-table-bordered">
+        <tr>
+            <td>x<sub>1</sub> = 1</td><td>y<sub>1</sub> = 1</td>
+        </tr>
+        <tr>
+            <td>x<sub>2</sub> = 1</td><td>y<sub>2</sub> = 1</td>
+        </tr>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="pure-menu pure-menu-horizontal">
+    <ul class="pure-menu-list" id="menu">
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="showSVG(this); return false;">Показать траекторию</a></li>
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link" onclick="showImage(this); return false;">Результат обратной прогонки</a></li>
+    </ul>
+</div>
 
+<p>
+Гамильтониан данной системы является постоянным и равным <strong>-2.443.</strong><br/>
+Результат обратной прогонки отличается максимум на <strong>{число}</strong>. Разность начальных данных: <strong>{число}</strong>
+</p>
 
-    var x = d3.scale.linear()
-        .range([0, width]);
+<div class="images">
 
-    var y = d3.scale.linear()
-        .range([height, 0]);
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/HematitaEZ.jpg" class="hidden" id="backstep" />
+</div>
 
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom");
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left");
-
-    var line = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
-
-    var svg = d3.select("body").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    d3.csv("data.csv", type, function(error, data) {
-      if (error) throw error;
-      var min = -1;
-     
-      
-      min = d3.max(data, function(d) { return -d.x1; });
-      x.domain([-min - 0.1, 1.1]);
-
-      y.domain(d3.extent(data, function(d) { return d.close; }));
-
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis)
-          .append("text")
-            .attr("x", width)
-            .attr("y", 15)
-            .text("x1");
-
-
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("x2");
-
-      svg.append("path")
-          .datum(data)
-          .attr("class", "line")
-          .attr("d", line);
-
-        svg.append("circle")
-                .attr("cx", function(dd){return x(1)})
-                .attr("cy", function(dd){return y(0)})
-                .attr('fill', 'red')
-                .attr("r", 2);
-
-        //////////////////////////////////////////////////
-        var path = svg.select("path.line"),
-        startPoint = pathStartPoint(path);
-        var marker = svg.append("circle");
-        marker.attr("r", 7)
-        .attr("transform", "translate(" + startPoint + ")");
-
-        transition();
-
-        //Get path start point for placing marker
-        function pathStartPoint(path) {
-        var d = path.attr("d");
-
-        var dsplitted = d.split(" ");
-        //console.log(dsplitted);
-        return dsplitted[0].split(",");
-        }
-
-        function transition() {
-        marker.transition()
-            .duration(7500)
-            .attrTween("transform", translateAlong(path.node()))
-            .each("end", transition);// infinite loop
-        }
-
-        function translateAlong(path) {
-        var l = path.getTotalLength();
-        return function(i) {
-          return function(t) {
-            var p = path.getPointAtLength(t * l);
-            return "translate(" + p.x + "," + p.y + ")";//Move marker
-          }
-        }
-        }
-        //////////////////////////////////////////////////////
-    });
-
-    function type(d) {
-      d.date = +d.x1;
-      d.close = +d.x2;
-      return d;
-    }
-  </script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

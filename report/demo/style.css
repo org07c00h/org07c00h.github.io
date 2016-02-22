@@ -1,0 +1,61 @@
+body {
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  padding: 10px;
+
+}
+ul {
+    list-style: none;
+}
+svg {
+    margin-top: 20px;
+    float: left;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  
+}
+td {
+    padding-right: 20px;
+}
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.pure-menu-item {
+  background: #1695A3;
+
+}
+
+.pure-menu-link {
+  color: white;
+}
+
+.pure-menu-link:hover {
+  background: #225378;
+}
+
+.image {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.button-secondary {
+  background: #1695A3; /* this is a light blue */
+  color: white;
+}
+
+.button-secondary:hover {
+  background: #225378; /* this is a light blue */
+}
