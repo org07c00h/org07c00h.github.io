@@ -1,0 +1,15 @@
+{
+  "background_color": "red",
+  "description": "Sample a2h page.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "test.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Sample a2h page",
+  "short_name": "Foxes",
+  "start_url": "/"
+}
