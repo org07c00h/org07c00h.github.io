@@ -11,5 +11,5 @@
   ],
   "name": "Sample a2h page",
   "short_name": "Foxes",
-  "start_url": "/"
+  "start_url": "/index.html"
 }
