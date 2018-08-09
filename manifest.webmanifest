@@ -7,9 +7,14 @@
       "src": "test.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "gift.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "name": "Sample a2h page",
-  "short_name": "Foxes",
+  "short_name": "Test a2h page",
   "start_url": "/index.html"
 }
