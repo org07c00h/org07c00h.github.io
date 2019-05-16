@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     document.body.appendChild(app.view);
 
-    app.loader.add('magnetic', '/7/Magnetic Wild.json')
+    app.loader.add('magnetic', '7/Magnetic Wild.json')
         .load(startup);
 
     function startup()
